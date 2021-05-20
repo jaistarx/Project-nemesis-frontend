@@ -6,7 +6,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
-
+import {DeleteUser} from "../../functions/user"
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -20,6 +20,20 @@ export default function AlertDialogSlide(props) {
 
   const handleClose = () => {
     setOpen(false);
+  };
+  const {id}=props;
+  const handleSubmit = async () => {
+    let result;
+    const data = {
+      id,
+    };
+    try {
+        handleClose();
+      result = await DeleteUser(data);
+      window.location.reload();
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -46,7 +60,7 @@ export default function AlertDialogSlide(props) {
           <Button onClick={handleClose} color="primary">
             Disagree
           </Button>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={handleSubmit} color="primary">
             Agree
           </Button>
         </DialogActions>

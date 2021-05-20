@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -10,6 +10,8 @@ import Paper from '@material-ui/core/Paper';
 import Button from "@material-ui/core/Button";
 import FormDialog from "../Popup/Popup"
 import AlertDialogSlide from "../Alert/Alert";
+import {AllUserDetails} from "../../functions/user"
+import Animation from "../LoadAnimation/Animation";
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -56,8 +58,34 @@ const useStyles = makeStyles({
 
 export default function CustomizedTables() {
   const classes = useStyles();
+    const [token,setToken]=useState("")
+    const [details,setDetails]=useState([])
+    const [load, setLoad] = useState(true);
+
+  const handleShow = async () => {
+    let result;
+    try {
+        setLoad(true);
+      result = await AllUserDetails();
+      setLoad(false);
+      setDetails(result);
+    //   localStorage.setItem("AUTH", true);
+    //   localStorage.setItem("User_details", JSON.stringify(result));
+    //   props.history.push("/table");
+    //   window.location.reload();
+    console.log(details);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+//   let udetails = JSON.parse(localStorage.getItem("User_details"));
+  
+  useEffect(()=>{
+    handleShow();
+  },[])
 
   return (
+      <div>
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="customized table">
         <TableHead>
@@ -71,20 +99,23 @@ export default function CustomizedTables() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row,n) => (
+          {details.map((row,n) => (
             <StyledTableRow key={row.name}>
               <StyledTableCell align="center">{n+1}</StyledTableCell>
               <StyledTableCell align="center">{row.name}</StyledTableCell>
-              <StyledTableCell align="center">{row.calories}</StyledTableCell>
-              <StyledTableCell align="center">{row.fat}</StyledTableCell>
-              <StyledTableCell align="right" ><FormDialog name={row.name}></FormDialog></StyledTableCell>
-              <StyledTableCell align="center"><AlertDialogSlide name={row.name}></AlertDialogSlide></StyledTableCell>
+              <StyledTableCell align="center">{row.email}</StyledTableCell>
+              <StyledTableCell align="center">{row.address}</StyledTableCell>
+              <StyledTableCell align="right" ><FormDialog name={row.name} email={row.email} address={row.address} id={row._id}></FormDialog></StyledTableCell>
+              <StyledTableCell align="center"><AlertDialogSlide name={row.name} email={row.email} address={row.address} id={row._id}></AlertDialogSlide></StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>
       </Table>
       
     </TableContainer>
-    
+    <div style={{ textAlign: "center",marginTop:"10%" }}>
+        {load && <Animation></Animation>}
+      </div>
+    </div>
   );
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -7,6 +7,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { makeStyles } from "@material-ui/core/styles";
+import { EditUser } from '../../functions/user';
 
 const useStyles = makeStyles((theme) => ({
     cap:{
@@ -14,7 +15,6 @@ const useStyles = makeStyles((theme) => ({
         border:"solid black 1px",
         borderRadius:"30px",
         fontSize:"20px",
-        // boxShadow:"2px 2px grey",
         backgroundColor:"black",
         color:"white"
     },
@@ -24,7 +24,9 @@ const useStyles = makeStyles((theme) => ({
 export default function FormDialog(props) {
     const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-
+  const [name,setUsername]=useState("")
+  const [address,setAddr]=useState("")
+  const {id}=props;
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -32,6 +34,23 @@ export default function FormDialog(props) {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const handleSubmit = async () => {
+    let result;
+    const data = {
+      name,
+      address,
+      id,
+    };
+    try {
+    handleClose();
+      result = await EditUser(data);
+      window.location.reload(); 
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
 
   return (
     <div>
@@ -43,9 +62,8 @@ export default function FormDialog(props) {
         <DialogContent>
           <DialogContentText>
             <div><span style={{color:"black"}}>Username : </span>{props.name}</div>
-            <div><span style={{color:"black"}}>Email : </span>{props.name}</div>
-            <div><span style={{color:"black"}}>Address : </span>{props.name}</div>
-            <div><span style={{color:"black"}}>Password : </span>{props.name}</div>
+            <div><span style={{color:"black"}}>Email : </span>{props.email}</div>
+            <div><span style={{color:"black"}}>Address : </span>{props.address}</div>
           </DialogContentText>
           <div className={classes.cap}>EDIT</div>
           <TextField
@@ -55,13 +73,15 @@ export default function FormDialog(props) {
             label="Username"
             type="username"
             fullWidth
+            onChange={(e) => setUsername(e.target.value)}
           />
            <TextField
             margin="dense"
             id="email"
-            label="Email"
+            label={props.email}
             type="email"
             fullWidth
+            disabled
           />
           <TextField
             margin="dense"
@@ -69,20 +89,14 @@ export default function FormDialog(props) {
             label="Address"
             type="address"
             fullWidth
-          />
-           <TextField
-            margin="dense"
-            id="password"
-            label="Password"
-            type="password"
-            fullWidth
+            onChange={(e) => setAddr(e.target.value)}
           />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={handleSubmit} color="primary">
             Confirm
           </Button>
         </DialogActions>

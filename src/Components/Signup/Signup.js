@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import {SignUp} from "../../functions/user"
+import {ISignUp} from "../../functions/user"
+import  SnackBar from "../SnackBar/SnackBar"
 const useStyles = makeStyles((theme) => ({
   root: {
     "& > *": {
@@ -39,13 +40,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Signup() {
+export default function Signup(props) {
   const classes = useStyles();
   const [name,setUsername]=useState("")
   const [email,setEmailid]=useState("")
   const [password,setPswd]=useState("")
   const [cpswd,setCpswd]=useState("")
   const [address,setAddr]=useState("")
+  const [snack, setSnack] = useState(false);
+  const [succerr, setSuccerr] = useState("");
+  const [descri, setDescri] = useState("");
 
   const handleSubmit = async () => {
     let result;
@@ -56,22 +60,17 @@ export default function Signup() {
         password,
     };
     try {
-      result = await SignUp(data);
-    //   localStorage.setItem("AUTH", true);
-    //   localStorage.setItem("User_details", JSON.stringify(result));
-    //   props.history.push("/dashboard");
-    //   window.location.reload();
+      result = await ISignUp(data);
+      setSnack(true)
+      setSuccerr("success")
+      setDescri("User created successfully!");
+      window.location.href = "/login";
     console.log(result)
     } catch (err) {
       console.log(err);
-      const {
-        err: { code },
-      } = err;
-      if (code === "23505") {
-        alert("The username already exist");
-      } else {
-        alert("Something went wrong");
-      }
+      setSnack(true)
+      setSuccerr("error")
+      setDescri("User not created ! Try different Email Id");
     }
   };
 
@@ -126,7 +125,16 @@ export default function Signup() {
             signup
           </Button>
         </div>
+        
       </div>
+      {snack && (
+        <SnackBar
+          con={succerr}
+          stat={snack}
+          fun={setSnack}
+          desc={descri}
+        ></SnackBar>
+      )}
     </div>
   );
 }

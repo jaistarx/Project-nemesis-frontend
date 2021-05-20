@@ -11,7 +11,27 @@ import Axios from 'axios'
 Axios.defaults.baseURL='http://localhost:8080'
 
 
+
 function App() {
+  let udetails = JSON.parse(localStorage.getItem("User_details"));
+  if(udetails){
+Axios.interceptors.request.use(
+  config=>{
+    config.headers.authorization=`Bearer ${udetails.token}`;
+    return config;
+  },
+  error=>{
+    return Promise.reject(error);
+  }
+)}
+
+  // const authAxios=Axios.create({
+  //   baseURL:Axios.defaults.baseURL,
+  //   headers:{
+  //     authorization:`Bearer ${udetails.token}`
+  //   }
+  // })
+  
   return (
     <div>
       <Header></Header>
