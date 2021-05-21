@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import jwt_decode from "jwt-decode";
-import ReactDOM from "react-dom";
 import Countdown from "react-countdown";
 import SnackBar from "../SnackBar/SnackBar";
 const useStyles = makeStyles((theme) => ({
@@ -19,9 +18,9 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
-  flex:{
-    display:"flex",
-    justifyContent:"space-between"
+  flex: {
+    display: "flex",
+    justifyContent: "space-between",
   },
 }));
 
@@ -41,7 +40,7 @@ export default function ButtonAppBar() {
     window.location.href = "/login";
   }
   function FTSeconds(e) {
-    if ((e.seconds == 15) && (e.minutes==0)) {
+    if (e.seconds === 15 && e.minutes === 0) {
       setSnack(true);
       setSuccerr("info");
       setDescri("This session is about to end!");
