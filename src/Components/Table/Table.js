@@ -34,6 +34,9 @@ const StyledTableRow = withStyles((theme) => ({
 }))(TableRow);
 
 const useStyles = makeStyles({
+  mar:{
+    marginTop:"60px",
+  },
   table: {
     minWidth: 700,
   },
@@ -66,7 +69,7 @@ export default function CustomizedTables() {
   }, []);
 
   return (
-    <div>
+    <div className={classes.mar}>
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="customized table">
           <TableHead>

@@ -4,6 +4,7 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import { ISignUp } from "../../functions/user";
 import SnackBar from "../SnackBar/SnackBar";
+import "./Signup.css"
 const useStyles = makeStyles((theme) => ({
   root: {
     "& > *": {
@@ -85,7 +86,7 @@ export default function Signup(props) {
   };
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root} className="bgpic">
       <h1 className={classes.head}>SIGNUP</h1>
       <div className={classes.ip}>
         <div>

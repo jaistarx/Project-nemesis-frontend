@@ -10,7 +10,7 @@ import SnackBar from "../SnackBar/SnackBar";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    marginBottom: "60px",
+    // marginBottom: "60px",
   },
   menuButton: {
     marginRight: theme.spacing(2),

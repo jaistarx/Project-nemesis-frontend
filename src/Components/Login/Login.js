@@ -3,7 +3,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import { ILogIn } from "../../functions/user";
-import  SnackBar from "../SnackBar/SnackBar"
+import  SnackBar from "../SnackBar/SnackBar";
+import "./Login.css"
 const useStyles = makeStyles((theme) => ({
   root: {
     "& > *": {
@@ -71,7 +72,7 @@ export default function Login() {
   };
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root} className="pic">
       <h1 className={classes.head}>LOGIN</h1>
       <div className={classes.ip}>
         <div>

@@ -1,0 +1,8 @@
+.bgpic {
+    background-image: url(../static/Group\ 16.svg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
