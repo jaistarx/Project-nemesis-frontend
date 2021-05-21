@@ -9,7 +9,7 @@ import Axios from 'axios'
 import ProtectedRoute from './Components/ProtectedRoute/protectedRoute'
 import NotSecureRoute from './Components/ProtectedRoute/noSecureRoute'
 
-Axios.defaults.baseURL='http://localhost:8080'
+Axios.defaults.baseURL='https://nemesis-backend.herokuapp.com/'
 
 
 
