@@ -47,8 +47,10 @@ export default function Login() {
   const [snack, setSnack] = useState(false);
   const [succerr, setSuccerr] = useState("");
   const [descri, setDescri] = useState("");
+  const [buttonstate,setButtonstate]=useState(false)
   const handleSubmit = async () => {
     let result;
+    setButtonstate(true)
     const data = {
       email,
       password,
@@ -61,6 +63,7 @@ export default function Login() {
       window.location.href = "/table";
     } catch (err) {
       console.log(err);
+      setButtonstate(false)
       setSnack(true)
       setSuccerr("error")
       setDescri("Error !");
@@ -85,6 +88,7 @@ export default function Login() {
             id="outlined-basic"
             label="password"
             variant="outlined"
+            type="password"
             className={classes.input}
             onChange={(e) => setPswd(e.target.value)}
           />
@@ -93,6 +97,7 @@ export default function Login() {
           <Button
             variant="outlined"
             color="primary"
+            disabled={buttonstate}
             className={classes.button}
             onClick={handleSubmit}
           >

@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import {ISignUp} from "../../functions/user"
-import  SnackBar from "../SnackBar/SnackBar"
+import { ISignUp } from "../../functions/user";
+import SnackBar from "../SnackBar/SnackBar";
 const useStyles = makeStyles((theme) => ({
   root: {
     "& > *": {
@@ -43,47 +43,46 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Signup(props) {
   const classes = useStyles();
-  const [name,setUsername]=useState("")
-  const [email,setEmailid]=useState("")
-  const [password,setPswd]=useState("")
-  const [cpswd,setCpswd]=useState("")
-  const [address,setAddr]=useState("")
+  const [name, setUsername] = useState("");
+  const [email, setEmailid] = useState("");
+  const [password, setPswd] = useState("");
+  const [cpswd, setCpswd] = useState("");
+  const [address, setAddr] = useState("");
   const [snack, setSnack] = useState(false);
   const [succerr, setSuccerr] = useState("");
   const [descri, setDescri] = useState("");
+  const [buttonstate, setButtonstate] = useState(false);
 
- 
   const handleSubmit = async () => {
-    if(password===cpswd){
+    if (password === cpswd) {
+      setButtonstate(true);
       let result;
       const data = {
-          name,
-          email, 
-          address,
-          password,
+        name,
+        email,
+        address,
+        password,
       };
       try {
         result = await ISignUp(data);
-        setSnack(true)
-        setSuccerr("success")
+        setSnack(true);
+        setSuccerr("success");
         setDescri("User created successfully!");
         window.location.href = "/login";
-      console.log(result)
+        console.log(result);
       } catch (err) {
         console.log(err);
-        setSnack(true)
-        setSuccerr("error")
+        setButtonstate(false);
+        setSnack(true);
+        setSuccerr("error");
         setDescri("User not created ! Try different Email Id");
       }
-    }
-    else{
-      setSnack(true)
-      setSuccerr("error")
+    } else {
+      setSnack(true);
+      setSuccerr("error");
       setDescri("Error ! password does not match");
     }
-    
   };
-
 
   return (
     <div className={classes.root}>
@@ -109,6 +108,7 @@ export default function Signup(props) {
           <TextField
             id="outlined-basic"
             label="Password"
+            type="password"
             variant="outlined"
             className={classes.input}
             onChange={(e) => setPswd(e.target.value)}
@@ -116,6 +116,7 @@ export default function Signup(props) {
           <TextField
             id="outlined-basic"
             label="Confirm password"
+            type="password"
             variant="outlined"
             className={classes.input}
             onChange={(e) => setCpswd(e.target.value)}
@@ -131,11 +132,16 @@ export default function Signup(props) {
           />
         </div>
         <div className={classes.tfield}>
-          <Button variant="outlined" color="primary" className={classes.button} onClick={handleSubmit}>
+          <Button
+            variant="outlined"
+            color="primary"
+            className={classes.button}
+            disabled={buttonstate}
+            onClick={handleSubmit}
+          >
             signup
           </Button>
         </div>
-        
       </div>
       {snack && (
         <SnackBar
