@@ -7,6 +7,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import { makeStyles } from "@material-ui/core/styles";
 import { EditUser } from "../../functions/user";
+import SnackBar from "../SnackBar/SnackBar";
 
 const useStyles = makeStyles((theme) => ({
   cap: {
@@ -24,6 +25,9 @@ export default function FormDialog(props) {
   const [open, setOpen] = React.useState(false);
   const [name, setUsername] = useState("");
   const [address, setAddr] = useState("");
+  const [snack, setSnack] = useState(false);
+  const [succerr, setSuccerr] = useState("");
+  const [descri, setDescri] = useState("");
   const { id } = props;
   const handleClickOpen = () => {
     setOpen(true);
@@ -43,9 +47,15 @@ export default function FormDialog(props) {
     try {
       handleClose();
       result = await EditUser(data);
+      setSnack(true);
+        setSuccerr("success");
+        setDescri("Successfully updated !");
       window.location.reload();
     } catch (err) {
       console.log(err);
+      setSnack(true);
+        setSuccerr("error");
+        setDescri("Error !");
     }
   };
 
@@ -111,6 +121,14 @@ export default function FormDialog(props) {
           </Button>
         </DialogActions>
       </Dialog>
+      {snack && (
+        <SnackBar
+          con={succerr}
+          stat={snack}
+          fun={setSnack}
+          desc={descri}
+        ></SnackBar>
+      )}
     </div>
   );
 }

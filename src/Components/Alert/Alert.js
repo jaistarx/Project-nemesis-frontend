@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -6,12 +6,17 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Slide from "@material-ui/core/Slide";
 import { DeleteUser } from "../../functions/user";
+import SnackBar from "../SnackBar/SnackBar";
+
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
 export default function AlertDialogSlide(props) {
   const [open, setOpen] = React.useState(false);
+  const [snack, setSnack] = useState(false);
+  const [succerr, setSuccerr] = useState("");
+  const [descri, setDescri] = useState("");
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -29,9 +34,15 @@ export default function AlertDialogSlide(props) {
     try {
       handleClose();
       result = await DeleteUser(data);
+      setSnack(true);
+        setSuccerr("success");
+        setDescri("Successfully deleted !");
       window.location.reload();
     } catch (err) {
       console.log(err);
+      setSnack(true);
+      setSuccerr("error");
+      setDescri("Error !");
     }
   };
 
@@ -66,6 +77,14 @@ export default function AlertDialogSlide(props) {
           </Button>
         </DialogActions>
       </Dialog>
+      {snack && (
+        <SnackBar
+          con={succerr}
+          stat={snack}
+          fun={setSnack}
+          desc={descri}
+        ></SnackBar>
+      )}
     </div>
   );
 }
