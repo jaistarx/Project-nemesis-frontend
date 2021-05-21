@@ -41,8 +41,7 @@ const useStyles = makeStyles({
     minWidth: 700,
   },
   button: {
-    //   width:"10%",
-    // marginleft:"-20%"
+
   },
 });
 
@@ -50,7 +49,7 @@ export default function CustomizedTables() {
   const classes = useStyles();
   const [details, setDetails] = useState([]);
   const [load, setLoad] = useState(true);
-
+  
   const handleShow = async () => {
     let result;
     try {
