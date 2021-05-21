@@ -8,10 +8,12 @@ const useStyles = makeStyles((theme) => ({
   root: {
     "& > *": {
       margin: theme.spacing(1),
+      
       //   width: "25ch",
     },
   },
   ip: {
+    backgroundColor: "white",
     textAlign: "center",
     marginRight: "25%",
     marginLeft: "25%",
@@ -19,18 +21,19 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: "2%",
     border: "solid black 1px",
     borderRadius: "20px",
-    boxShadow: " 4px 4px grey",
+    boxShadow: " 6px 6px grey",
   },
   head: {
     textAlign: "center",
     fontSize: "50px",
-    marginTop: "7%",
+    marginTop: "11%",
   },
   tfield: {
     marginTop: "3%",
   },
   input: {
     width: "50%",
+    margin:"1% 0%"
   },
   button: {
     width: "20%",
@@ -60,7 +63,7 @@ export default function Login() {
       console.log(err);
       setSnack(true)
       setSuccerr("error")
-      setDescri("Wrong credentials");
+      setDescri("Error !");
     }
   };
 

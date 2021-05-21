@@ -69,16 +69,11 @@ export default function CustomizedTables() {
       result = await AllUserDetails();
       setLoad(false);
       setDetails(result);
-    //   localStorage.setItem("AUTH", true);
-    //   localStorage.setItem("User_details", JSON.stringify(result));
-    //   props.history.push("/table");
-    //   window.location.reload();
     console.log(details);
     } catch (err) {
       console.log(err);
     }
   };
-//   let udetails = JSON.parse(localStorage.getItem("User_details"));
   
   useEffect(()=>{
     handleShow();
@@ -113,9 +108,9 @@ export default function CustomizedTables() {
       </Table>
       
     </TableContainer>
-    <div style={{ textAlign: "center",marginTop:"10%" }}>
-        {load && <Animation></Animation>}
-      </div>
+    {load && <div style={{ textAlign: "center",marginTop:"10%" }}>
+        <Animation></Animation>
+        </div>}
     </div>
   );
 }

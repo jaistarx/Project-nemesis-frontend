@@ -27,7 +27,6 @@ export const ILogIn = (data) => {
 export const EditUser = (data) => {
   return new Promise((resolve, reject) => {
     const { id } = data;
-    console.log(data)
     Axios.put(`/${id}`, data)
       .then((res) => {
         resolve(res.data);

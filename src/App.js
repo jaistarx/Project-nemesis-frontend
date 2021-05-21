@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { Router } from "@reach/router";
-import logo from "./logo.svg";
+import React from "react";
+import {BrowserRouter,Route,Switch} from 'react-router-dom'
 import "./App.css";
 import ButtonAppBar from "./Components/Header/Header";
 import Login from "./Components/Login/Login";
 import Signup from "./Components/Signup/Signup";
 import CustomizedTables from "./Components/Table/Table";
 import Axios from 'axios'
+import ProtectedRoute from './Components/ProtectedRoute/protectedRoute'
+import NotSecureRoute from './Components/ProtectedRoute/noSecureRoute'
 
 Axios.defaults.baseURL='http://localhost:8080'
 
@@ -35,26 +36,35 @@ Axios.interceptors.request.use(
   return (
     <div>
       <Header></Header>
-      <Router>
+      {/* <Router>
         <Log path="/login"></Log>
+        <Log path="/"></Log>
         <Signup path="/signup"></Signup>
         <Tab path="/table"></Tab>
-      </Router>
+      </Router> */}
+      <BrowserRouter>
+      <Switch>
+      <Route path='/'  component={Login} exact/>
+      <NotSecureRoute path='/login' component={Login} exact pathname='/table' />
+        <NotSecureRoute path='/signup' component={Signup} exact pathname='/table' />
+        <ProtectedRoute path='/table' component={CustomizedTables} exact pathname='/login'/>
+      </Switch>
+      </BrowserRouter>
     </div>
   );
 }
 
-function Log() {
-  return <Login></Login>;
-}
+// function Log() {
+//   return <Login></Login>;
+// }
 function Header() {
   return <ButtonAppBar></ButtonAppBar>;
 }
-function Sigup() {
-  return <Signup></Signup>;
-}
-function Tab() {
-  return <CustomizedTables></CustomizedTables>;
-}
+// function Sigup() {
+//   return <Signup></Signup>;
+// }
+// function Tab() {
+//   return <CustomizedTables></CustomizedTables>;
+// }
 
 export default App;

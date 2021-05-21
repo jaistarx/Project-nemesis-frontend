@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   ip: {
+    backgroundColor: "white",
     textAlign: "center",
     marginRight: "25%",
     marginLeft: "25%",
@@ -19,18 +20,18 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: "2%",
     border: "solid black 1px",
     borderRadius: "20px",
-    boxShadow: " 4px 4px grey",
+    boxShadow: " 6px 6px grey",
   },
   head: {
     textAlign: "center",
     fontSize: "50px",
-    marginTop: "7%",
+    marginTop: "10%",
   },
   tfield: {
     marginTop: "3%",
   },
   input: {
-    margin: "0% 2%",
+    margin: "1% 2%",
   },
   inputadd: {
     width: "60%",
@@ -51,27 +52,36 @@ export default function Signup(props) {
   const [succerr, setSuccerr] = useState("");
   const [descri, setDescri] = useState("");
 
+ 
   const handleSubmit = async () => {
-    let result;
-    const data = {
-        name,
-        email, 
-        address,
-        password,
-    };
-    try {
-      result = await ISignUp(data);
-      setSnack(true)
-      setSuccerr("success")
-      setDescri("User created successfully!");
-      window.location.href = "/login";
-    console.log(result)
-    } catch (err) {
-      console.log(err);
+    if(password===cpswd){
+      let result;
+      const data = {
+          name,
+          email, 
+          address,
+          password,
+      };
+      try {
+        result = await ISignUp(data);
+        setSnack(true)
+        setSuccerr("success")
+        setDescri("User created successfully!");
+        window.location.href = "/login";
+      console.log(result)
+      } catch (err) {
+        console.log(err);
+        setSnack(true)
+        setSuccerr("error")
+        setDescri("User not created ! Try different Email Id");
+      }
+    }
+    else{
       setSnack(true)
       setSuccerr("error")
-      setDescri("User not created ! Try different Email Id");
+      setDescri("Error ! password does not match");
     }
+    
   };
 
 
