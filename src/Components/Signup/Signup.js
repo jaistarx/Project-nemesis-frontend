@@ -5,6 +5,8 @@ import Button from "@material-ui/core/Button";
 import { ISignUp } from "../../functions/user";
 import SnackBar from "../SnackBar/SnackBar";
 import "./Signup.css"
+import CirPro from "../CProgress/CProgress"
+
 const useStyles = makeStyles((theme) => ({
   root: {
     "& > *": {
@@ -139,6 +141,7 @@ export default function Signup(props) {
             disabled={buttonstate}
             onClick={handleSubmit}
           >
+            {buttonstate && <div style={{textAlign:"center",position:"absolute"}}><CirPro></CirPro></div>}
             signup
           </Button>
         </div>

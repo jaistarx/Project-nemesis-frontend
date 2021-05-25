@@ -5,6 +5,7 @@ import Button from "@material-ui/core/Button";
 import { ILogIn } from "../../functions/user";
 import  SnackBar from "../SnackBar/SnackBar";
 import "./Login.css"
+import CirPro from "../CProgress/CProgress"
 const useStyles = makeStyles((theme) => ({
   root: {
     "& > *": {
@@ -102,10 +103,12 @@ export default function Login() {
             className={classes.button}
             onClick={handleSubmit}
           >
+            {buttonstate && <div style={{textAlign:"center",position:"absolute"}}><CirPro></CirPro></div>}
             login
           </Button>
         </div>
       </div>
+      {/* <div style={{textAlign:"center"}}><CirPro></CirPro></div> */}
       {snack && (
         <SnackBar
           con={succerr}
